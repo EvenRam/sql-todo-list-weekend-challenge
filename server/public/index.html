@@ -12,6 +12,36 @@
   <header>
     <h1>SQL TO-DO List</h1>
   </header>
+  <main>
+    <h2> What needs to be completed today?</h2>
+    <form onSubmit="postTodo(event)">
+      <input 
+      placeholder="Todo"
+      type="text"
+      id="todoName" 
+      data-testid="toDoTextInput">
+      <button data-testid="submitButton">Submit</button>
+    </form>
 
+    <div>
+    <h2>To-Do List</h2>
+    <table>
+      <thead>
+        <tr>
+          <th> Task</th>
+          <th>Completion </th>
+          
+        </tr>
+
+        <tbody>
+          <!--
+            commenting out code 
+          -->
+        </tbody>
+
+      </thead>
+    </table>
+  </div>
+  </main>
 </body>
 </html>
