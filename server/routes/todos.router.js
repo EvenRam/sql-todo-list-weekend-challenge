@@ -13,10 +13,17 @@ router.get('/', (req, res) => {
         // Needs to be the exact SQL that you would write in Postico
 
     
-            //  let queryText = `SELECT * FROM "todos";`
+ let queryText = `SELECT * FROM "todos";`;
 
     // Use pool to make the transaction with the Database 
-
+    pool.query(queryText).then(result => {
+        // Sends back the results in an object
+        res.send(result.rows);
+      }) 
+        .catch(error => {
+          console.log('error getting todo list', error);
+          res.sendStatus(500);
+        });
 })
 
  
