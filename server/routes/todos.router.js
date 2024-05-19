@@ -4,7 +4,6 @@ const pool = require('../modules/pool');
 
 
 
-
 // recieved clients GET request and repsond with result.rows
 router.get('/', (req, res) => {
 
@@ -34,14 +33,32 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     console.log('req.body', req.body);
 
-    
+    let newTodo = req.body;
+    console.log('adding new todo item', newTodo);
+
+    console.log( "adding new todo:", newTodo)
 
     // ! Use parameterization ✅
-
+ let queryText = `
+    INSERT INTO "todos" ("text", "isComplete")
+    VALUES ($1 , $2);
+    `;
 
     // Use the pool to make the transaction
     // pool.query(queryText, [SOME ARRAY OF PARAMETERS])
-})  
+
+   
+    pool.query(queryText,[newTodo.text,newTodo.isComplete])
+      .then(result => {
+        res.sendStatus(201);
+      })
+      .catch(error => {
+        console.log(`Error adding new todos`, error);
+        res.sendStatus(500);
+      })
+  });
+
+
 
 //PUT Route:
 

@@ -14,13 +14,13 @@
   </header>
   <main>
     <h2> What needs to be completed today?</h2>
-    <form onSubmit="postTodo(event)">
+    <form id="form">
       <input 
       placeholder="Todo"
       type="text"
-      id="todoName" 
+      id="taskName" 
       data-testid="toDoTextInput">
-      <button data-testid="submitButton">Submit</button>
+      <button onClick = "handleSubmit(event)" data-testid="submitButton">Submit</button>
     </form>
 
     <div>
@@ -30,12 +30,13 @@
         <tr>
           <th> Tasks</th>
           <th>Completion </th>
-          <th>  </th>
+          <th>Delete </th>
 
-          
         </tr>
 
         <tbody id="todoTbody">
+          <tr data-testid="toDoItem">...</tr>
+
           <!--
             commenting out code 
           -->
