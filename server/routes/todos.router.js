@@ -4,7 +4,7 @@ const pool = require('../modules/pool');
 
 
 
-// recieved clients GET request and repsond with result.rows
+// recieved clients GET request and repsond with rall todo items
 router.get('/', (req, res) => {
 
  //Query text to send to the database (SELECT)

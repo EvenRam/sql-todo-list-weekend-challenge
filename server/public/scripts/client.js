@@ -6,12 +6,14 @@ getTodos()
 
 //create a function to GET Todo List from the server
  function getTodos(){
-
+    console.log('in get todos...')
     axios.get('/todos')
     .then((response) => {
         console.log("GET / response", response);
+        // render the todo list
         renderTodos(response.data);
-        
+    }).catch((error) => {
+        console.log('Error', error);
     });
 }
 
@@ -45,18 +47,21 @@ getTodos()
     function renderTodos(todoList){
     let todoTableBody = document.getElementById("todoTbody")
     todoTableBody.innerHTML = '';
+
+    // another way to clear  todoTableBody.clear()
     //loop over each todo and append data to the dom
 
 for(let todos of todoList){
-    if(todos.isComplete === )
     todoTableBody.innerHTML += `
-             <tr>
+             <tr data-testid="toDoItem">
                 <td>${todos.text}</td>
 
                 <td>${todos.isComplete} </td>
-                <td><button onClick="isComplete(${todos.id})"> Complete </button> </td>
+                <td data-testid="completeButton">
+                <button onClick="completionStatus(${todos.id})"> Complete </button>
+                 </td>
 
-                <td> <button onClick="deletetodo(${todos.id})"> Delete </button> </td>
+                <tddata-testid="deleteButton"> <button onClick="deletetodo(${todos.id})"> Delete </button> </td>
             <tr>
 
         `;
