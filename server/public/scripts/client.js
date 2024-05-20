@@ -52,6 +52,7 @@ getTodos()
     //loop over each todo and append data to the dom
 
 for(let todos of todoList){
+    
     todoTableBody.innerHTML += `
              <tr data-testid="toDoItem">
                 <td>${todos.text}</td>

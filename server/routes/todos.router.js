@@ -4,7 +4,7 @@ const pool = require('../modules/pool');
 
 
 
-// recieved clients GET request and repsond with rall todo items
+// recieved clients GET request and repsond with rall todo it
 router.get('/', (req, res) => {
 
  //Query text to send to the database (SELECT)
@@ -99,6 +99,23 @@ console.log("change is complete:", todosId, isComplete);
 
 //DELETE route:
 router.delete('/:id', (req, res) => {
+    let queryText = `
+    DELETE FROM "todos" WHERE "id" = &1;
+        `
+
+        let reqId = [req.params.id]
+
+    // Use pool to make the transaction with the Database 
+    // Remember: The URL itself will be used to hold some small bit of data. (parameters)
+    pool.query(queryText, [reqId])
+    .then((result) => {
+      res.sendStatus(204)
+    })
+    .catch((err) => {
+      console.log(`Error making query.. '${queryText}'`, err)
+      res.sendStatus(500)
+    })
+
 
 });
 
