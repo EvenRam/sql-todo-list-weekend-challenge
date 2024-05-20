@@ -48,11 +48,13 @@ getTodos()
     //loop over each todo and append data to the dom
 
 for(let todos of todoList){
+    if(todos.isComplete === )
     todoTableBody.innerHTML += `
              <tr>
                 <td>${todos.text}</td>
 
-                <td>${todos.isComplete} <button onClick="isComplete(${todos.id})"> Complete </button> </td>
+                <td>${todos.isComplete} </td>
+                <td><button onClick="isComplete(${todos.id})"> Complete </button> </td>
 
                 <td> <button onClick="deletetodo(${todos.id})"> Delete </button> </td>
             <tr>
@@ -87,26 +89,52 @@ for(let todos of todoList){
         task.text = document.getElementById("taskName").value
         task.isComplete = false
 
+        if(document.getElementById("todoTbody").value ){
+
+        }
+
         postTodo(task);
         clearForm;
     }
 
 //clear form -- need to clear the input forms 
     //initialize function clearform(){}
-    function clearForm(){
+    function clearForm(event){
+        event.preventDefault()
         let form = document.getElementById("form")
         form.reset();
     }
 
 // PUT -- sending a put request to change completion status on the todo list 
-        // initialize function completionStatus (){}
+        // initialize 
+        
+    function completionStatus (isComplete, todosId){
+
+        console.log("changing the is complete status:", isComplete, todosId)
+
+    
 
     // Use axios to send a PUT request to change to complete
         // Send  & id in URL
     // For .then, will call the render function.
 
+    axios({
+        method: "PUT",
+        url: "/todos/" + todosId,
+        data: {
+            isComplete: isComplete
+        }
+      })
+        .then((response) => {
+          refreshTodos()
+          // refreshTodos() will retrieve all koalas and then update the DOM
+    
+        })
+        .catch((error) => {
+          console.log("error", error);
+    
+        });
 
-
-
+    }
 // Delete-- 
     // Remove a song from our list

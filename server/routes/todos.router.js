@@ -62,7 +62,14 @@ router.post('/', (req, res) => {
 
 //PUT Route:
 
-router.put('/rank/:id', (req, res) => {
+router.put('/:id', (req, res) => {
+
+    let todosId = req.params.id;
+
+    let isComplete = req.body.isComplete;
+
+  
+console.log("change is complete:", todosId, isComplete);
 
  //Query text to send to the database (SELECT)
         // Using backticks will be easier since queries often have quotes in them
@@ -70,10 +77,20 @@ router.put('/rank/:id', (req, res) => {
 
     
             //  let queryText = `SELECT * FROM "todos";`
-
+            let queryText = `
+            UPDATE "todos" SET "isComplete" = NOT "isComplete"
+            WHERE "id"= $1;
+        `
     // Use pool to make the transaction with the Database 
     // Remember: The URL itself will be used to hold some small bit of data. (parameters)
-
+    pool.query(queryText, [todosId])
+    .then((result) => {
+      res.sendStatus(204)
+    })
+    .catch((err) => {
+      console.log(`Error making query.. '${queryText}'`, err)
+      res.sendStatus(500)
+    })
 
 })
 
