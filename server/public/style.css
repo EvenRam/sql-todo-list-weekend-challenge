@@ -14,3 +14,7 @@ table, th {
     background: rgb(210, 221, 225);
     color: black;
   }
+
+  .compeleted{
+    color: darkgreen;
+  }

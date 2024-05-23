@@ -52,22 +52,25 @@ getTodos()
     //loop over each todo and append data to the dom
 
 for(let todos of todoList){
-    
+
     todoTableBody.innerHTML += `
              <tr data-testid="toDoItem">
                 <td>${todos.text}</td>
 
                 <td>${todos.isComplete} </td>
                 <td data-testid="completeButton">
-                <button onClick="completionStatus(${todos.id})"> Complete </button>
+                <button onClick="completionStatus(${todos.isComplete},${todos.id})"> Complete </button>
                  </td>
 
-                <tddata-testid="deleteButton"> <button onClick="deletetodo(${todos.id})"> Delete </button> </td>
+                <td data-testid="deleteButton"> 
+                <button onClick="deleteTodo(event,${todos.id})"> Delete </button> 
+                </td>
             <tr>
 
         `;
         console.log('This should be the todo list',todoTableBody)
         console.log("the users incoming input",todos)
+        
 }
 
     };
@@ -142,5 +145,19 @@ for(let todos of todoList){
         });
 
     }
-// Delete-- 
-    // Remove a song from our list
+// Delete--
+    // Remove a taks from our list
+function deleteTodo(event, todosId){
+    event.preventDefault()
+    axios({
+        method: "DELETE",
+        url: `/todos/${todosId}`
+    })
+    .then((response) => {
+        refreshTodos();
+    }).catch((error) => {
+        console.log('Error', error);
+        alert('Something went wrong');
+    });
+    console.log(deleteTodo)
+}

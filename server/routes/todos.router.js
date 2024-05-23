@@ -12,7 +12,9 @@ router.get('/', (req, res) => {
         // Needs to be the exact SQL that you would write in Postico
 
     
- let queryText = `SELECT * FROM "todos";`;
+ let queryText = `SELECT * FROM "todos"
+ ORDER BY "id" 
+ ;`;
 
     // Use pool to make the transaction with the Database 
     pool.query(queryText).then(result => {
@@ -71,6 +73,7 @@ router.put('/:id', (req, res) => {
   
 console.log("change is complete:", todosId, isComplete);
 
+
  //Query text to send to the database (SELECT)
         // Using backticks will be easier since queries often have quotes in them
         // Needs to be the exact SQL that you would write in Postico
@@ -78,12 +81,17 @@ console.log("change is complete:", todosId, isComplete);
     
             //  let queryText = `SELECT * FROM "todos";`
             let queryText = `
-            UPDATE "todos" SET "isComplete" = NOT "isComplete"
-            WHERE "id"= $1;
-        `
+            UPDATE "todos" SET "isComplete" = $1
+            WHERE "id"= $2;
+        `;
+
+        let queryParams = [!isComplete, todosId]
+
+        
+
     // Use pool to make the transaction with the Database 
     // Remember: The URL itself will be used to hold some small bit of data. (parameters)
-    pool.query(queryText, [todosId])
+    pool.query(queryText, queryParams)
     .then((result) => {
       res.sendStatus(204)
     })
@@ -99,15 +107,13 @@ console.log("change is complete:", todosId, isComplete);
 
 //DELETE route:
 router.delete('/:id', (req, res) => {
+  let itemId = req.params.id;
     let queryText = `
-    DELETE FROM "todos" WHERE "id" = &1;
-        `
-
-        let reqId = [req.params.id]
-
+    DELETE FROM "todos" WHERE "id" = $1;
+    `;
     // Use pool to make the transaction with the Database 
     // Remember: The URL itself will be used to hold some small bit of data. (parameters)
-    pool.query(queryText, [reqId])
+    pool.query(queryText, [itemId])
     .then((result) => {
       res.sendStatus(204)
     })
