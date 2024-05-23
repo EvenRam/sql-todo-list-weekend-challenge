@@ -52,10 +52,10 @@ getTodos()
     //loop over each todo and append data to the dom
 
 for(let todos of todoList){
-
+    const classText = todos.isComplete ? 'green' : 'red';
     todoTableBody.innerHTML += `
              <tr data-testid="toDoItem">
-                <td>${todos.text}</td>
+                <td class=${classText}>${todos.text}</td>
 
                 <td>${todos.isComplete} </td>
                 <td data-testid="completeButton">
@@ -119,9 +119,9 @@ for(let todos of todoList){
         
     function completionStatus (isComplete, todosId){
 
+        
+        
         console.log("changing the is complete status:", isComplete, todosId)
-
-    
 
     // Use axios to send a PUT request to change to complete
         // Send  & id in URL
